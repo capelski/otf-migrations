@@ -1,10 +1,32 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Body, Controller, Module, Post, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { IsString } from 'class-validator';
+
+export class Note {
+  @IsString()
+  text: string;
+}
+
+@Controller('/notes')
+export class NotesController {
+  @Post()
+  createNote(@Body() note: Note) {
+    console.log('Body', note);
+
+    // Persist note to DB...
+    return 'Ok';
+  }
+}
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [NotesController],
+  providers: [],
 })
 export class AppModule {}
+
+export async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(3000);
+}
