@@ -5,7 +5,7 @@ import { OtfMigration } from '../otf-migration';
 export class Schema1NoteOtfMigration extends OtfMigration {
   schemaTarget = 1;
 
-  migrate(body: any): void {
+  protected apply(body: any): void {
     if (body.text) {
       body.title = body.text;
       delete body.text;

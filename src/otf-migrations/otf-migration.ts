@@ -3,12 +3,12 @@ import { Request } from 'express';
 export abstract class OtfMigration {
   abstract schemaTarget: number;
 
-  abstract migrate(body: any): void;
+  protected abstract apply(body: any): void;
 
-  apply(request: Request) {
+  migrate(request: Request) {
     const schema = request.body.schema ?? 0;
     if (schema < this.schemaTarget) {
-      this.migrate(request.body);
+      this.apply(request.body);
     }
   }
 }

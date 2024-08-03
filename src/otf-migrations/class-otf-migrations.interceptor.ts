@@ -15,7 +15,7 @@ export abstract class ClassOtfMigrationsInterceptor implements NestInterceptor {
       (a, b) => a.schemaTarget - b.schemaTarget,
     );
     for (const migration of sortedMigrations) {
-      migration.apply(request);
+      migration.migrate(request);
     }
 
     return next.handle();
