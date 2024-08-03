@@ -1,8 +1,23 @@
-import { Body, Controller, Module, Post, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Module,
+  Post,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { OtfMigrationsModule } from './otf-migrations/otf-migrations.module';
+import { NoteOtfMigrationsInterceptor } from './otf-migrations/notes/note-otf-migrations.interceptor';
 
-export class Note {
+export class VersionedEntity {
+  @IsNumber()
+  @IsOptional()
+  schema?: number;
+}
+
+export class Note extends VersionedEntity {
   @IsString()
   title: string;
 
@@ -14,6 +29,7 @@ export class Note {
 @Controller('/notes')
 export class NotesController {
   @Post()
+  @UseInterceptors(NoteOtfMigrationsInterceptor)
   createNote(@Body() note: Note) {
     console.log('Body', note);
 
@@ -23,7 +39,7 @@ export class NotesController {
 }
 
 @Module({
-  imports: [],
+  imports: [OtfMigrationsModule],
   controllers: [NotesController],
   providers: [],
 })
