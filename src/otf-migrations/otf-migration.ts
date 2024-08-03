@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 export abstract class OtfMigration {
-  abstract schemaTarget: number;
+  abstract readonly schemaTarget: number;
 
   protected abstract apply(body: any): void;
 
