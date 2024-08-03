@@ -1,10 +1,14 @@
 import { Body, Controller, Module, Post, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class Note {
   @IsString()
-  text: string;
+  title: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 }
 
 @Controller('/notes')
