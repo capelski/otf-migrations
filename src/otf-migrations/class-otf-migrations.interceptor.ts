@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { OtfMigration } from './otf-migration';
 
 export abstract class ClassOtfMigrationsInterceptor implements NestInterceptor {
-  abstract otfMigrations: OtfMigration[];
+  constructor(protected otfMigrations: OtfMigration[]) {}
 
   intercept(
     context: ExecutionContext,

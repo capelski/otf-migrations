@@ -34,7 +34,7 @@ export class NotesController {
     console.log('Body', note);
 
     // Persist note to DB...
-    return 'Ok';
+    return note;
   }
 }
 
