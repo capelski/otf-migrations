@@ -9,6 +9,7 @@ export abstract class OtfMigration {
     const schema = request.body.schema ?? 0;
     if (schema < this.schemaTarget) {
       this.apply(request.body);
+      request.body.schema = this.schemaTarget;
     }
   }
 }

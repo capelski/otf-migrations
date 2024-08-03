@@ -7,7 +7,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { OtfMigrationsModule } from './otf-migrations/otf-migrations.module';
 import { NoteOtfMigrationsInterceptor } from './otf-migrations/notes/note-otf-migrations.interceptor';
 
@@ -24,6 +24,9 @@ export class Note extends VersionedEntity {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @IsBoolean()
+  text: boolean;
 }
 
 @Controller('/notes')
